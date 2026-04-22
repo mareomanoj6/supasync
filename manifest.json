@@ -3,7 +3,7 @@
   "name": "SupaSync",
   "version": "1.0.0",
   "minAppVersion": "1.0.0",
-  "description": "Sync your Obsidian vault across devices using Supabase Storage.",
+  "description": "Sync your Vaults across devices using Supabase Storage.",
   "author": "Mareo Manoj",
   "authorUrl": "https://github.com/mareomanoj6",
   "isDesktopOnly": false
