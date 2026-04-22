@@ -8,7 +8,7 @@ Supasync brings professional-grade synchronization to your Obsidian vault by lev
 
 ## Key Features
 
-- **True Cross-Platform Sync**: Seamlessly synchronize your knowledge base across Windows, macOS, Linux, Android, and iOS.
+- **True Cross-Platform Sync**: Seamlessly synchronize your knowledge base across Windows, Linux, and Android. (I have not tested on macOS or iOS, as I do not have the devices, but I think they should work flawlessly over there as well.)
 - **Sovereign Data Ownership**: No middleman. Connect directly to your own Supabase project. Your data stays in your control.
 - **Smart Conflict Resolution**: Uses high-precision SHA-256 hashing to detect changes. When conflicts occur, Supasync preserves both versions by saving the remote copy to a dedicated conflict folder—no data is ever overwritten without your knowledge.
 - **Set-and-Forget Auto-Sync**: Customizable automatic push intervals keep your cloud backup perfectly in sync with your local thoughts.
