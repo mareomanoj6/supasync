@@ -1,0 +1,20 @@
+{
+  "name": "supasync",
+  "version": "1.0.0",
+  "description": "Sync your Obsidian vault across devices using Supabase Storage.",
+  "main": "main.js",
+  "scripts": {
+    "build": "node esbuild.config.mjs && npm run deploy",
+    "deploy": "mkdir -p \"/home/icarus/Obsidian/.obsidian/plugins/supasync\" && cp main.js manifest.json styles.css \"/home/icarus/Obsidian/.obsidian/plugins/supasync/\"",
+    "dev": "node esbuild.config.mjs --watch"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {
+    "obsidian": "latest",
+    "typescript": "^5.0.0",
+    "esbuild": "^0.23.0",
+    "@types/node": "^20.0.0"
+  }
+}

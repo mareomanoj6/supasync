@@ -1,0 +1,10 @@
+{
+  "id": "supasync",
+  "name": "SupaSync",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Sync your Obsidian vault across devices using Supabase Storage.",
+  "author": "Icarus",
+  "authorUrl": "https://github.com/luc-ifer-66",
+  "isDesktopOnly": false
+}
