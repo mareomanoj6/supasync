@@ -1,0 +1,20 @@
+{
+  "name": "supasync",
+  "version": "1.0.0",
+  "description": "Automatically syncs an Obsidian vault to Supabase in real time",
+  "main": "main.js",
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "node esbuild.config.mjs",
+    "version": "echo \"x.y.z\" > version.txt"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "blueimp-md5": "^2.19.0"
+  },
+  "devDependencies": {
+    "obsidian": "npm:obsidian@^1.5.3",
+    "typescript": "^5.0.0",
+    "esbuild": "^0.20.0"
+  }
+}
