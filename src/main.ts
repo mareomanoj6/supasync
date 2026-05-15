@@ -8,7 +8,7 @@ export default class SupaSyncPlugin extends Plugin {
   syncEngine: SyncEngine;
 
   async onload() {
-    console.log('Loading Supabase Sync plugin...');
+    console.log('Loading SupaSync plugin...');
 
     this.settings = this.loadData() || { ...DEFAULT_SETTINGS };
 
@@ -19,6 +19,19 @@ export default class SupaSyncPlugin extends Plugin {
     }
 
     supabaseManager.init(this.settings);
+
+    // Refresh session if it exists
+    if (this.settings.session) {
+      try {
+        const newSession = await supabaseManager.refreshSession(this.settings.session);
+        this.settings.session = newSession;
+        await this.saveData(this.settings);
+      } catch (e) {
+        console.error('SupaSync: Session refresh failed', e);
+        this.settings.session = null;
+        await this.saveData(this.settings);
+      }
+    }
 
     this.syncEngine = new SyncEngine(this);
 
@@ -32,9 +45,12 @@ export default class SupaSyncPlugin extends Plugin {
   }
 
   onunload() {
-    console.log('Unloading Supabase Sync plugin...');
+    console.log('Unloading SupaSync plugin...');
     this.stopSync();
-    supabaseManager.getClient().removeAllChannels();
+    const client = supabaseManager.getClient();
+    if (client) {
+      client.removeAllChannels();
+    }
   }
 
   async updateSupabaseClient() {

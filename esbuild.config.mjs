@@ -4,7 +4,7 @@ await esbuild.build({
   entryPoints: ['src/main.ts'],
   bundle: true,
   external: ['obsidian'],
-  outfile: 'main.js',
+  outfile: 'build/main.js',
   target: ['es2018'],
   platform: 'browser',
   format: 'cjs',

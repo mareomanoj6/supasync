@@ -54,7 +54,10 @@ export class SyncEngine {
   }
 
   async stop() {
-    supabaseManager.getClient().removeAllChannels();
+    const client = supabaseManager.getClient();
+    if (client) {
+      client.removeAllChannels();
+    }
     this.updateStatus('Sync off');
   }
 
@@ -220,7 +223,8 @@ export class SyncEngine {
     this.pendingRemoteWrites.add(path);
     try {
       if (remote.content && remote.content.startsWith('STORAGE:')) {
-        const url = remote.content.replace('STORAGE:', '');
+        const fileName = remote.content.replace('STORAGE:', '');
+        const url = await supabaseManager.getSignedBinaryUrl(fileName);
         const response = await fetch(url);
         const buffer = await response.arrayBuffer();
         await this.plugin.app.vault.adapter.writeBinary(path, buffer);

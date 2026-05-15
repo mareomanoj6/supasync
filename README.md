@@ -7,15 +7,27 @@ Automatically synchronize your Obsidian vault with a Supabase backend in real-ti
 1. Install the `supasync` plugin in your Obsidian vault.
 2. Open the plugin settings.
 3. Enter your **Supabase URL** and **Anon Key**.
-4. Enable the **Sync Enabled** toggle.
+4. Follow the **Authentication** section below to secure your data.
+5. Enable the **Sync Enabled** toggle.
 
 ## Supabase Setup
 
 To enable synchronization, you must prepare your Supabase project:
 
-1. **Database Schema**: Run the provided `schema.sql` in the Supabase SQL Editor to create the `files` and `tombstones` tables.
-2. **Realtime**: Ensure that the `files` and `tombstones` tables are added to the `supabase_realtime` publication (included in `schema.sql`).
-3. **Storage**: Create a public storage bucket named `vault-attachments` to handle binary files (images, PDFs, etc.).
+1. **Database Schema**: Run the provided `schema.sql` in the Supabase SQL Editor. This sets up the `files` and `tombstones` tables and enables Row Level Security (RLS).
+2. **Realtime**: Ensure that the `files` and `tombstones` tables are added to the `supabase_realtime` publication.
+3. **Storage**: Create a **Private** storage bucket named `vault-attachments` for binary files.
+
+## Authentication & Security
+
+SupaSync uses Supabase Auth to ensure that your data is private and secure. 
+
+1. In the plugin settings, click **Login with OAuth**.
+2. Complete the login process in your browser.
+3. Copy the authentication code provided on the redirect page.
+4. Paste the code into the **Verify login code** field in the settings tab.
+
+By authenticating, you activate **Row Level Security (RLS)**, meaning only you can access your vault's data on the Supabase backend.
 
 ## Settings Reference
 
@@ -41,4 +53,4 @@ To enable synchronization, you must prepare your Supabase project:
 
 ## Security Warning
 
-The `data.json` file in your plugin settings folder contains your Supabase API key in plain text. **Do not commit your `.obsidian` folder or `data.json` to public version control.**
+The `data.json` file in your plugin settings folder contains your Supabase API key and session tokens. **Do not commit your `.obsidian` folder or `data.json` to public version control.**

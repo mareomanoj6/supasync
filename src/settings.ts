@@ -9,6 +9,7 @@ export interface PluginSettings {
   syncEnabled: boolean;
   excludePatterns: string;
   debounceMs: number;
+  session?: any;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
@@ -107,12 +108,47 @@ export class SupaSyncSettingsTab extends PluginSettingTab {
           }
         }));
 
+    const sAuth = new Setting('auth')
+      .setName('Authentication')
+      .setDesc('Secure your vault with Supabase Auth (Required for RLS)')
+      .addButton(btn => btn
+        .setButtonText('Login with OAuth')
+        .onClick(async () => {
+          try {
+            const url = await supabaseManager.initiateOAuth();
+            if (url) {
+              window.open(url, '_blank');
+              new Notice('Login window opened. Please copy the code from the redirect page.');
+            }
+          } catch (e: any) {
+            new Notice('OAuth error: ' + e.message);
+          }
+        }));
+
+    const sVerify = new Setting('verifyAuth')
+      .setName('Verify login code')
+      .addText(text => text
+        .setPlaceholder('Paste the code from the browser here')
+        .onChange(async (value) => {
+          if (value.length < 5) return;
+          try {
+            const session = await supabaseManager.exchangeCodeForSession(value);
+            settings.session = session;
+            await this.plugin.saveData(settings);
+            new Notice('Authentication successful!');
+          } catch (e: any) {
+            new Notice('Verification failed: ' + e.message);
+          }
+        }));
+
     this.containerEl.addChild(sUrl.setting);
     this.containerEl.addChild(sKey.setting);
     this.containerEl.addChild(sEnabled.setting);
     this.containerEl.addChild(sExclude.setting);
     this.containerEl.addChild(sDebounce.setting);
     this.containerEl.addChild(sTest.setting);
+    this.containerEl.addChild(sAuth.setting);
+    this.containerEl.addChild(sVerify.setting);
 
     if (Platform.isMobile) {
       const mobileInfo = this.containerEl.createEl('div', { cls: 'supabase-sync-banner' });
